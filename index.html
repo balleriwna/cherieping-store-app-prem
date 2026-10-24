@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Princess Premify 🎀 Store Digital Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pinkSoft: '#FFF0F5',
+                        pinkCard: '#FFE4E1',
+                        pinkBorder: '#FFB6C1',
+                        pinkAccent: '#FF69B4',
+                        pinkDeep: '#DB7093',
+                        goldCrown: '#FFD700',
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        receipt: ['Courier Prime', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #ffd1dc 100%);
+            min-height: 100vh;
+        }
+        .receipt-edge {
+            background: radial-gradient(circle, transparent, transparent 50%, #ffffff 50%, #ffffff 100%);
+            background-size: 15px 15px;
+        }
+    </style>
+</head>
+<body class="font-sans text-pinkDeep pb-16">
+
+    <!-- Navbar Header -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b-2 border-pinkBorder px-4 py-3 shadow-sm">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">👑</span>
+                <h1 class="font-fredoka text-xl text-pinkDeep font-bold tracking-wide">Princess Premify ✨</h1>
+            </div>
+            <span class="bg-pinkSoft text-pinkDeep text-xs font-semibold px-3 py-1.5 rounded-full border border-pinkBorder flex items-center gap-1">
+                🌸 Open Order
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 pt-6">
+        
+        <!-- Welcome Banner -->
+        <div class="bg-white/90 rounded-3xl p-6 mb-6 border-2 border-pinkBorder shadow-md text-center relative overflow-hidden">
+            <div class="absolute -top-4 -left-4 text-4xl opacity-20">🎀</div>
+            <div class="absolute -bottom-4 -right-4 text-4xl opacity-20">🪄</div>
+            <h2 class="font-fredoka text-2xl font-bold text-pinkDeep mb-1">Halo Princess! 💖</h2>
+            <p class="text-sm text-gray-600">Pilih aplikasi favoritmu di bawah ini ya dear, harganya ramah di kantong bangett~ ✨</p>
+            
+            <!-- Search Bar -->
+            <div class="mt-4 relative max-w-md mx-auto">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-pinkBorder"></i>
+                <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Cari aplikasi impianmu di sini..." 
+                    class="w-full pl-10 pr-4 py-2.5 rounded-full border-2 border-pinkBorder bg-pinkSoft/50 text-sm text-pinkDeep placeholder-pinkBorder focus:outline-none focus:border-pinkAccent transition-all">
+            </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="flex gap-2 overflow-x-auto pb-4 mb-2 scrollbar-hide justify-start md:justify-center">
+            <button onclick="setCategory('ALL')" class="cat-btn active bg-pinkDeep text-white px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap shadow-sm border border-pinkDeep transition-all">
+                ✨ Semua Aplikasi
+            </button>
+            <button onclick="setCategory('Streaming App')" class="cat-btn bg-white text-pinkDeep px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap border border-pinkBorder hover:bg-pinkSoft transition-all">
+                🎬 Streaming App
+            </button>
+            <button onclick="setCategory('Editing')" class="cat-btn bg-white text-pinkDeep px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap border border-pinkBorder hover:bg-pinkSoft transition-all">
+                🎨 Editing
+            </button>
+            <button onclick="setCategory('Study & Tools')" class="cat-btn bg-white text-pinkDeep px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap border border-pinkBorder hover:bg-pinkSoft transition-all">
+                📚 Study & Tools
+            </button>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Dynamic Render -->
+        </div>
+    </main>
+
+    <!-- Modal Form Order -->
+    <div id="orderModal" class="fixed inset-0 bg-pinkDeep/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl border-4 border-pinkBorder w-full max-w-lg p-6 shadow-2xl max-h-[90vh] overflow-y-auto relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 bg-pinkSoft text-pinkDeep w-8 h-8 rounded-full flex items-center justify-center font-bold hover:bg-pinkBorder">✕</button>
+            
+            <div class="text-center mb-4">
+                <span class="text-3xl">🛍️</span>
+                <h3 id="modalTitle" class="font-fredoka text-xl font-bold text-pinkDeep mt-1">Form Order Princess</h3>
+                <p class="text-xs text-gray-500">Isi datamu dengan benar ya dear~ 🌸</p>
+            </div>
+
+            <form id="orderForm" onsubmit="handleGenerateReceipt(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-pinkDeep mb-1">👑 Nama Princess / Panggilan</label>
+                    <input type="text" id="custName" required placeholder="Contoh: Cantika" class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-pinkDeep mb-1">💬 Nomor WhatsApp Active</label>
+                    <input type="tel" id="custWA" required placeholder="Contoh: 08123456789" class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-pinkDeep mb-1">🎁 Pilih Paket / Durasi</label>
+                    <select id="custVariant" required class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent font-medium text-pinkDeep">
+                        <!-- Dynamic Options -->
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-pinkDeep mb-1">🔢 Jumlah Order (Qty)</label>
+                    <input type="number" id="custQty" min="1" value="1" required class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-pinkDeep mb-1">💳 Metode Pembayaran</label>
+                    <select id="custPayment" required class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent font-medium text-pinkDeep">
+                        <option value="QRIS (All Payment)">QRIS All Payment (BCA, DANA, GoPay, ShopeePay, dll)</option>
+                        <option value="DANA">DANA</option>
+                        <option value="GoPay">GoPay</option>
+                        <option value="ShopeePay">ShopeePay</option>
+                        <option value="Bank Transfer">Bank Transfer (BCA / Mandiri / BRI)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-pinkDeep mb-1">📝 Catatan / Request Khusus (Opsional)</label>
+                    <textarea id="custNote" rows="2" placeholder="Masukkan email jika butuh, atau catatan lain..." class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-pinkDeep text-white font-fredoka py-3 rounded-2xl font-bold shadow-md hover:bg-pinkAccent transition-all text-sm mt-2 flex items-center justify-center gap-2">
+                    🧾 Lanjut ke Struk Tagihan ✨
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Receipt / Struk Belanja -->
+    <div id="receiptModal" class="fixed inset-0 bg-pinkDeep/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl border-4 border-pinkBorder relative text-gray-800 font-receipt">
+            
+            <!-- Struk Header -->
+            <div class="text-center border-b-2 border-dashed border-gray-300 pb-3 mb-3">
+                <p class="font-bold text-base tracking-wider text-pinkDeep">👑 PRINCESS PREMIFY 👑</p>
+                <p class="text-[10px] text-gray-500">Struk Tagihan Order Digital</p>
+                <p id="recInvoice" class="text-[10px] text-gray-400 mt-1">INV-20261024-001</p>
+            </div>
+
+            <!-- Struk Body -->
+            <div class="space-y-1.5 text-xs">
+                <div class="flex justify-between"><span class="text-gray-500">Nama:</span><span id="recName" class="font-bold"></span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Nomor WA:</span><span id="recWA"></span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Aplikasi:</span><span id="recApp" class="font-bold"></span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Paket:</span><span id="recVariant"></span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Qty:</span><span id="recQty"></span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Pembayaran:</span><span id="recPay" class="font-bold text-pinkDeep"></span></div>
+            </div>
+
+            <div class="border-t-2 border-dashed border-gray-300 my-3 pt-2">
+                <div class="flex justify-between font-bold text-sm">
+                    <span>TOTAL TAGIHAN:</span>
+                    <span id="recTotal" class="text-pinkDeep"></span>
+                </div>
+            </div>
+
+            <!-- QRIS Code Section -->
+            <div class="bg-pinkSoft/50 p-3 rounded-2xl border border-pinkBorder text-center my-3">
+                <p class="text-[11px] font-sans font-bold text-pinkDeep mb-1">Scan QRIS untuk Pembayaran 📲</p>
+                <!-- Sample QRIS Placeholder -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=PRINCESS-PREMIFY-QRIS" alt="QRIS Code" class="w-32 h-32 mx-auto rounded-lg border border-pinkBorder bg-white p-1">
+                <p class="text-[9px] text-gray-500 font-sans mt-1">An. Princess Store Premium</p>
+            </div>
+
+            <p class="text-[10px] text-center text-gray-400 mb-3 font-sans">Silakan lakukan pembayaran lalu klik tombol di bawah untuk konfirmasi otomatis ke admin ✨</p>
+
+            <!-- Redirect Buttons -->
+            <div class="grid grid-cols-2 gap-2 font-sans font-bold text-xs">
+                <button onclick="sendOrder('WA')" class="bg-emerald-500 text-white py-2.5 rounded-xl flex items-center justify-center gap-1 shadow-sm hover:bg-emerald-600">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+                </button>
+                <button onclick="sendOrder('TELE')" class="bg-sky-500 text-white py-2.5 rounded-xl flex items-center justify-center gap-1 shadow-sm hover:bg-sky-600">
+                    <i class="fa-brands fa-telegram text-sm"></i> Telegram
+                </button>
+            </div>
+
+            <button onclick="closeReceipt()" class="w-full text-center text-xs text-gray-400 font-sans underline mt-2">Batal / Edit Order</button>
+        </div>
+    </div>
+
+    <script>
+        // Store Settings (Ganti dengan kontak kamu ya dear!)
+        const CONFIG = {
+            whatsappNumber: "6281234567890", 
+            telegramUsername: "PrincessAdmin"
+        };
+
+        // Complete Pricelist Data
+        const PRODUCTS = [
+            // STREAMING APP
+            {
+                id: 'netflix',
+                name: 'Netflix Premium',
+                category: 'Streaming App',
+                badge: '🔥 Best Seller',
+                icon: '🎬',
+                variants: [
+                    { name: '1P1U - 1 Hari', price: 6000 },
+                    { name: '1P1U - 3 Hari', price: 12000 },
+                    { name: '1P1U - 7 Hari', price: 18000 },
+                    { name: '1P1U - 14 Hari', price: 30000 },
+                    { name: '1P1U - 1 Bulan', price: 45000 },
+                    { name: '1P1U - 2 Bulan', price: 85000 },
+                    { name: '1P1U - 3 Bulan', price: 125000 },
+                    { name: '1P2U - 1 Hari', price: 5000 },
+                    { name: '1P2U - 3 Hari', price: 8000 },
+                    { name: '1P2U - 7 Hari', price: 15000 },
+                    { name: '1P2U - 14 Hari', price: 25000 },
+                    { name: '1P2U - 1 Bulan', price: 30000 },
+                    { name: '1P2U - 2 Bulan', price: 55000 },
+                    { name: '1P2U - 3 Bulan', price: 85000 },
+                    { name: 'SEMPRIV - 1 Bulan', price: 55000 },
+                    { name: 'ANTI LIMIT - 1 Bulan', price: 60000 },
+                    { name: 'SINGLESCREEN - 1 Bulan', price: 65000 }
+                ]
+            },
+            {
+                id: 'youtube',
+                name: 'YouTube Premium',
+                category: 'Streaming App',
+                badge: '🎵 Tanpa Iklan',
+                icon: '▶️',
+                variants: [
+                    { name: 'Famplan - 1 Bulan', price: 12000 },
+                    { name: 'Famplan - 2 Bulan', price: 20000 },
+                    { name: 'Indplan - 1 Bulan', price: 20000 },
+                    { name: 'Indplan (Renew) - 3 Bulan', price: 45000 },
+                    { name: 'Indplan (No Renew) - 3 Bulan', price: 60000 }
+                ]
+            },
+            {
+                id: 'vidio',
+                name: 'Vidio Premium',
+                category: 'Streaming App',
+                badge: '⚽ Sports & Movies',
+                icon: '📺',
+                variants: [
+                    { name: 'Sharing 2U - 1 Hari', price: 10000 },
+                    { name: 'Sharing 2U - 3 Hari', price: 15000 },
+                    { name: 'Sharing 2U - 7 Hari', price: 20000 },
+                    { name: 'Sharing 2U - 1 Bulan', price: 35000 },
+                    { name: 'Private - 1 Hari', price: 12000 },
+                    { name: 'Private - 3 Hari', price: 18000 },
+                    { name: 'Private - 7 Hari', price: 25000 },
+                    { name: 'Private - 1 Bulan', price: 55000 }
+                ]
+            },
+            {
+                id: 'disney',
+                name: 'Disney+ Hotstar',
+                category: 'Streaming App',
+                badge: '🏰 Premium Plan',
+                icon: '🏰',
+                variants: [
+                    { name: '1 Hari 6U', price: 5000 },
+                    { name: '3 Hari 6U', price: 12000 },
+                    { name: '5 Hari 6U', price: 15000 },
+                    { name: '7 Hari 6U', price: 20000 },
+                    { name: '1 Hari 3U', price: 10000 },
+                    { name: '3 Hari 3U', price: 15000 },
+                    { name: '5 Hari 3U', price: 20000 },
+                    { name: '7 Hari 3U', price: 25000 },
+                    { name: '1 Bulan 6U', price: 35000 },
+                    { name: '1 Bulan 5U', price: 40000 },
+                    { name: '1 Bulan 4U', price: 46000 },
+                    { name: '1 Bulan 3U', price: 60000 }
+                ]
+            },
+            {
+                id: 'viu',
+                name: 'Viu Premium',
+                category: 'Streaming App',
+                badge: '🇰🇷 Drama Korea',
+                icon: '🌸',
+                variants: [
+                    { name: 'Private Anlim - 1 Hari', price: 3000 },
+                    { name: 'Private Anlim - 3 Hari', price: 6000 },
+                    { name: 'Private Anlim - 7 Hari', price: 10000 },
+                    { name: 'Private Anlim - 1 Bulan', price: 15000 },
+                    { name: 'Private Anlim - 2 Bulan', price: 20000 },
+                    { name: 'Private Anlim - 3 Bulan', price: 25000 },
+                    { name: 'Private Anlim - 6 Bulan', price: 40000 },
+                    { name: 'Private Anlim - 1 Tahun', price: 50000 },
+                    { name: 'Private Biasa - 1 Hari', price: 2000 },
+                    { name: 'Private Biasa - 3 Hari', price: 4000 },
+                    { name: 'Private Biasa - 7 Hari', price: 8000 },
+                    { name: 'Private Biasa - 1 Bulan', price: 10000 },
+                    { name: 'Private Biasa - 2 Bulan', price: 15000 },
+                    { name: 'Private Biasa - 3 Bulan', price: 20000 },
+                    { name: 'Private Biasa - 6 Bulan', price: 30000 },
+                    { name: 'Private Biasa - 1 Tahun', price: 40000 }
+                ]
+            },
+            {
+                id: 'loklok',
+                name: 'Loklok VIP',
+                category: 'Streaming App',
+                badge: '🍿 Movies & Series',
+                icon: '🐥',
+                variants: [
+                    { name: 'Basic Sharing 3U - 1 Hari', price: 5000 },
+                    { name: 'Basic Sharing 3U - 3 Hari', price: 8000 },
+                    { name: 'Basic Sharing 3U - 5 Hari', price: 11000 },
+                    { name: 'Basic Sharing 3U - 7 Hari', price: 15000 },
+                    { name: 'Basic Sharing 3U - 1 Bulan', price: 27000 },
+                    { name: 'Standard Sharing - 1 Hari', price: 8000 },
+                    { name: 'Standard Sharing - 3 Hari', price: 12000 },
+                    { name: 'Standard Sharing - 7 Hari', price: 17000 },
+                    { name: 'Standard Sharing - 14 Hari', price: 26000 },
+                    { name: 'Standard Sharing - 1 Bulan', price: 30000 },
+                    { name: 'Basic Private - 1 Hari', price: 7000 },
+                    { name: 'Basic Private - 3 Hari', price: 15000 },
+                    { name: 'Basic Private - 7 Hari', price: 20000 },
+                    { name: 'Basic Private - 11 Hari', price: 25000 },
+                    { name: 'Basic Private - 1 Bulan', price: 60000 },
+                    { name: 'Standard Private - 1 Bulan', price: 85000 }
+                ]
+            },
+            {
+                id: 'wetv',
+                name: 'WeTV VIP',
+                category: 'Streaming App',
+                badge: '🇨🇳 Drama Asia',
+                icon: '💫',
+                variants: [
+                    { name: 'Sharing 6U - 1 Hari', price: 5000 },
+                    { name: 'Sharing 6U - 3 Hari', price: 7000 },
+                    { name: 'Sharing 6U - 7 Hari', price: 10000 },
+                    { name: 'Sharing 6U - 1 Bulan', price: 15000 },
+                    { name: 'Private - 1 Bulan', price: 40000 }
+                ]
+            },
+
+            // EDITING
+            {
+                id: 'capcut',
+                name: 'CapCut Pro',
+                category: 'Editing',
+                badge: '🎥 Video Editor',
+                icon: '🎬',
+                variants: [
+                    { name: 'Sharing 3U - 1 Hari', price: 8000 },
+                    { name: 'Sharing 3U - 3 Hari', price: 12000 },
+                    { name: 'Sharing 3U - 7 Hari', price: 17000 },
+                    { name: 'Sharing 3U - 1 Bulan', price: 35000 },
+                    { name: 'Sharing 2U - 1 Hari', price: 9000 },
+                    { name: 'Sharing 2U - 3 Hari', price: 15000 },
+                    { name: 'Sharing 2U - 7 Hari', price: 20000 },
+                    { name: 'Sharing 2U - 1 Bulan', price: 45000 },
+                    { name: 'Private - 1 Hari', price: 10000 },
+                    { name: 'Private - 3 Hari', price: 18000 },
+                    { name: 'Private - 7 Hari', price: 25000 }
+                ]
+            },
+            {
+                id: 'canva',
+                name: 'Canva Pro',
+                category: 'Editing',
+                badge: '🎨 Design Pro',
+                icon: '👑',
+                variants: [
+                    { name: 'Member - 1 Hari', price: 3000 },
+                    { name: 'Member - 3 Hari', price: 5000 },
+                    { name: 'Member - 7 Hari', price: 7000 },
+                    { name: 'Member - 1 Bulan', price: 12000 },
+                    { name: 'Member - 2 Bulan', price: 14000 },
+                    { name: 'Member - 3 Bulan', price: 17000 },
+                    { name: 'Member - 4 Bulan', price: 20000 },
+                    { name: 'Member - 5 Bulan', price: 24000 },
+                    { name: 'Member - 6 Bulan', price: 27000 },
+                    { name: 'Member - 1 Tahun (Garansi 6 Bln)', price: 32000 },
+                    { name: 'Member - 1 Tahun (Full Garansi)', price: 37000 },
+                    { name: 'Template Designer (+2k dari harga)', price: 14000 }
+                ]
+            },
+            {
+                id: 'ibis',
+                name: 'Ibis Paint X',
+                category: 'Editing',
+                badge: '🖌️ Digital Art',
+                icon: '🎨',
+                variants: [
+                    { name: 'Sharing - 6 Bulan', price: 30000 },
+                    { name: 'Sharing - 1 Tahun', price: 40000 }
+                ]
+            },
+            {
+                id: 'alight',
+                name: 'Alight Motion Pro',
+                category: 'Editing',
+                badge: '✨ Motion Design',
+                icon: '🔮',
+                variants: [
+                    { name: 'Sharing - 1 Bulan', price: 15000 },
+                    { name: 'Private - 1 Bulan', price: 35000 }
+                ]
+            },
+            {
+                id: 'picsart',
+                name: 'PicsArt Gold',
+                category: 'Editing',
+                badge: '📸 Photo Editor',
+                icon: '💖',
+                variants: [
+                    { name: 'Sharing - 1 Bulan', price: 15000 },
+                    { name: 'Private - 1 Bulan', price: 25000 }
+                ]
+            },
+            {
+                id: 'wink',
+                name: 'Wink VIP',
+                category: 'Editing',
+                badge: '💄 HD Video Enhancer',
+                icon: '🪄',
+                variants: [
+                    { name: 'Sharing - 7 Hari', price: 20000 },
+                    { name: 'Sharing - 1 Bulan', price: 38000 },
+                    { name: 'Private - 7 Hari', price: 25000 },
+                    { name: 'Private - 1 Bulan', price: 60000 }
+                ]
+            },
+
+            // STUDY & TOOLS
+            {
+                id: 'scribd',
+                name: 'Scribd VIP',
+                category: 'Study & Tools',
+                badge: '📖 Buku & Ebook',
+                icon: '📚',
+                variants: [
+                    { name: 'Sharing - 1 Bulan', price: 15000 },
+                    { name: 'Sharing - 2 Bulan', price: 20000 },
+                    { name: 'Sharing - 3 Bulan', price: 28000 },
+                    { name: 'Private - 1 Bulan', price: 35000 }
+                ]
+            },
+            {
+                id: 'wps',
+                name: 'WPS Office Premium',
+                category: 'Study & Tools',
+                badge: '📝 Dokumen & Tugas',
+                icon: '📄',
+                variants: [
+                    { name: 'Sharing - 1 Bulan', price: 20000 },
+                    { name: 'Sharing - 1 Tahun', price: 30000 },
+                    { name: 'Private - 1 Bulan', price: 40000 }
+                ]
+            },
+            {
+                id: 'spotify',
+                name: 'Spotify Premium',
+                category: 'Study & Tools',
+                badge: '🎧 Musik No Ads',
+                icon: '🎵',
+                variants: [
+                    { name: 'Harian - 1 Hari', price: 6000 },
+                    { name: 'Harian - 3 Hari', price: 10000 },
+                    { name: 'Harian - 7 Hari', price: 18000 },
+                    { name: 'Famplan - 1 Bulan', price: 25000 },
+                    { name: 'Indplan Replace - 1 Bulan', price: 35000 },
+                    { name: 'Indplan No Replace - 1 Bulan', price: 45000 },
+                    { name: 'Student Plan - 1 Bulan', price: 35000 }
+                ]
+            },
+            {
+                id: 'getcontact',
+                name: 'GetContact Premium',
+                category: 'Study & Tools',
+                badge: '🔍 Cek Tag Nomor',
+                icon: '📱',
+                variants: [
+                    { name: 'Cek No (Per Nomor)', price: 2000 },
+                    { name: 'Full Premium - 1 Bulan', price: 15000 }
+                ]
+            },
+            {
+                id: 'zoom',
+                name: 'Zoom Pro Meeting',
+                category: 'Study & Tools',
+                badge: '🎥 Meeting & Kuliah',
+                icon: '💻',
+                variants: [
+                    { name: '100 Peserta - 1 Jam', price: 7000 },
+                    { name: '100 Peserta - 1 Hari', price: 15000 },
+                    { name: '100 Peserta - 7 Hari', price: 45000 },
+                    { name: '100 Peserta - 14 Hari', price: 55000 },
+                    { name: '300 Peserta - 1 Jam', price: 15000 },
+                    { name: '300 Peserta - 1 Hari', price: 35000 },
+                    { name: '300 Peserta - 7 Hari', price: 100000 },
+                    { name: '500 Peserta - 1 Jam', price: 25000 },
+                    { name: '500 Peserta - 1 Hari', price: 65000 },
+                    { name: '500 Peserta - 7 Hari', price: 250000 },
+                    { name: '500 Peserta - 1 Bulan', price: 350000 },
+                    { name: '1000 Peserta - 1 Jam', price: 45000 },
+                    { name: '1000 Peserta - 1 Hari', price: 115000 }
+                ]
+            }
+        ];
+
+        let currentCategory = 'ALL';
+        let selectedProduct = null;
+        let generatedOrderData = null;
+
+        // Render Products
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            grid.innerHTML = '';
+
+            const filtered = PRODUCTS.filter(p => {
+                const matchCat = currentCategory === 'ALL' || p.category === currentCategory;
+                const matchSearch = p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
+                return matchCat && matchSearch;
+            });
+
+            filtered.forEach(prod => {
+                const minPrice = Math.min(...prod.variants.map(v => v.price));
+                const card = document.createElement('div');
+                card.className = "bg-white/90 rounded-3xl p-5 border-2 border-pinkBorder shadow-sm hover:shadow-md transition-all flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-3xl">${prod.icon}</span>
+                            <span class="bg-pinkSoft text-pinkDeep text-[10px] font-bold px-2.5 py-1 rounded-full border border-pinkBorder">${prod.badge}</span>
+                        </div>
+                        <h3 class="font-fredoka text-lg font-bold text-pinkDeep">${prod.name}</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">Mulai dari <span class="font-bold text-pinkDeep">Rp ${minPrice.toLocaleString('id-ID')}</span></p>
+                    </div>
+                    <button onclick="openModal('${prod.id}')" class="mt-4 w-full bg-pinkSoft text-pinkDeep font-fredoka py-2 rounded-xl text-xs font-bold border border-pinkBorder hover:bg-pinkDeep hover:text-white transition-all flex items-center justify-center gap-1">
+                        🌸 Pilih Paket
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-pinkDeep', 'text-white');
+                btn.classList.add('bg-white', 'text-pinkDeep');
+            });
+            event.target.classList.remove('bg-white', 'text-pinkDeep');
+            event.target.classList.add('bg-pinkDeep', 'text-white');
+            renderProducts();
+        }
+
+        function filterProducts() {
+            renderProducts();
+        }
+
+        // Modal Order Setup
+        function openModal(prodId) {
+            selectedProduct = PRODUCTS.find(p => p.id === prodId);
+            document.getElementById('modalTitle').innerText = `Order ${selectedProduct.name} 🎀`;
+            
+            const variantSelect = document.getElementById('custVariant');
+            variantSelect.innerHTML = '';
+            selectedProduct.variants.forEach((v, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.innerText = `${v.name} - Rp ${v.price.toLocaleString('id-ID')}`;
+                variantSelect.appendChild(opt);
+            });
+
+            document.getElementById('orderModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+        }
+
+        // Generate Struk Belanja
+        function handleGenerateReceipt(e) {
+            e.preventDefault();
+            const variantIdx = document.getElementById('custVariant').value;
+            const variant = selectedProduct.variants[variantIdx];
+            const qty = parseInt(document.getElementById('custQty').value);
+            const totalPrice = variant.price * qty;
+            const invNum = 'INV-' + Math.floor(100000 + Math.random() * 900000);
+
+            generatedOrderData = {
+                invoice: invNum,
+                name: document.getElementById('custName').value,
+                wa: document.getElementById('custWA').value,
+                app: selectedProduct.name,
+                variant: variant.name,
+                qty: qty,
+                payment: document.getElementById('custPayment').value,
+                note: document.getElementById('custNote').value || '-',
+                total: totalPrice
+            };
+
+            // Render ke Modal Receipt
+            document.getElementById('recInvoice').innerText = generatedOrderData.invoice;
+            document.getElementById('recName').innerText = generatedOrderData.name;
+            document.getElementById('recWA').innerText = generatedOrderData.wa;
+            document.getElementById('recApp').innerText = generatedOrderData.app;
+            document.getElementById('recVariant').innerText = generatedOrderData.variant;
+            document.getElementById('recQty').innerText = generatedOrderData.qty;
+            document.getElementById('recPay').innerText = generatedOrderData.payment;
+            document.getElementById('recTotal').innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+
+            closeModal();
+            document.getElementById('receiptModal').classList.remove('hidden');
+        }
+
+        function closeReceipt() {
+            document.getElementById('receiptModal').classList.add('hidden');
+        }
+
+        // Redirect Teks ke WhatsApp / Telegram
+        function sendOrder(platform) {
+            const d = generatedOrderData;
+            const textMsg = `Halo Admin Princess Store! 🎀✨%0A%0A` +
+                `Aku mau konfirmasi pesanan baru nih dear~%0A` +
+                `━━━━━━━━━━━━━━━━━━%0A` +
+                `🧾 *No Invois:* ${d.invoice}%0A` +
+                `👑 *Nama:* ${d.name}%0A` +
+                `💬 *WhatsApp:* ${d.wa}%0A` +
+                `📦 *Aplikasi:* ${d.app}%0A` +
+                `🎁 *Paket:* ${d.variant}%0A` +
+                `🔢 *Jumlah:* ${d.qty}%0A` +
+                `💳 *Metode Bayar:* ${d.payment}%0A` +
+                `📝 *Catatan:* ${d.note}%0A` +
+                `💰 *Total Tagihan:* Rp ${d.total.toLocaleString('id-ID')}%0A` +
+                `━━━━━━━━━━━━━━━━━━%0A%0A` +
+                `Bukti pembayaran akan segera aku kirim ya dear! Terima kasih 💖`;
+
+            if (platform === 'WA') {
+                window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${textMsg}`, '_blank');
+            } else {
+                window.open(`https://t.me/${CONFIG.telegramUsername}`, '_blank');
+            }
+        }
+
+        // Initial Load
+        renderProducts();
+    </script>
+</body>
+</html>

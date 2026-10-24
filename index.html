@@ -61,7 +61,7 @@
     <main class="max-w-4xl mx-auto px-4 pt-6">
         
         <!-- Welcome Banner -->
-        <div class="bg-white/90 rounded-3xl p-6 mb-6 border-2 border-pinkBorder shadow-md text-center relative overflow-hidden">
+        <div class="bg-white/90 rounded-3xl p-6 mb-4 border-2 border-pinkBorder shadow-md text-center relative overflow-hidden">
             <div class="absolute -top-4 -left-4 text-4xl opacity-20">🎀</div>
             <div class="absolute -bottom-4 -right-4 text-4xl opacity-20">✨</div>
             <h2 class="font-fredoka text-2xl font-bold text-pinkDeep mb-1">Halo Cheriemate! 💖</h2>
@@ -75,39 +75,24 @@
             </div>
         </div>
 
-        <!-- Section Testimoni (Testie Box) -->
-        <div class="mb-6 bg-white/80 rounded-3xl p-4 border-2 border-pinkBorder shadow-sm">
-            <div class="flex items-center justify-between mb-3 px-1">
-                <h3 class="font-fredoka text-sm font-bold text-pinkDeep flex items-center gap-1.5">
-                    <span>💬</span> Testimoni Cheriemate ✨
-                </h3>
-                <span class="text-[11px] font-semibold text-pinkAccent bg-pinkSoft px-2.5 py-0.5 rounded-full border border-pinkBorder">4.9 / 5.0 ⭐</span>
-            </div>
-
-            <!-- Testie Cards Slider / List -->
-            <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-                <div class="min-w-[220px] max-w-[240px] bg-pinkSoft/60 p-3 rounded-2xl border border-pinkBorder text-xs flex-shrink-0">
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="font-bold text-pinkDeep">@syafiraa_</span>
-                        <span class="text-amber-400 text-[10px]">⭐⭐⭐⭐⭐</span>
-                    </div>
-                    <p class="text-gray-600 text-[11px] line-clamp-2">"Prosesnya super cepat & adminnya ramah banget! Netflix lancar jaya gajadi kena limit 😍"</p>
+        <!-- Kotak Khusus Link Testimoni Asli (Real Proof) -->
+        <div class="mb-6 bg-gradient-to-r from-pinkSoft via-white to-pinkSoft rounded-3xl p-4 border-2 border-pinkBorder shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-3 text-center sm:text-left">
+                <div class="w-12 h-12 rounded-2xl bg-pinkSoft border-2 border-pinkBorder flex items-center justify-center text-2xl flex-shrink-0 mx-auto sm:mx-0">
+                    💬
                 </div>
-                <div class="min-w-[220px] max-w-[240px] bg-pinkSoft/60 p-3 rounded-2xl border border-pinkBorder text-xs flex-shrink-0">
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="font-bold text-pinkDeep">@dian_pratiwi</span>
-                        <span class="text-amber-400 text-[10px]">⭐⭐⭐⭐⭐</span>
-                    </div>
-                    <p class="text-gray-600 text-[11px] line-clamp-2">"Canva pro nya aktif kilat! Makasih cherieping store buat tugas kuliah langsung beres 💖"</p>
-                </div>
-                <div class="min-w-[220px] max-w-[240px] bg-pinkSoft/60 p-3 rounded-2xl border border-pinkBorder text-xs flex-shrink-0">
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="font-bold text-pinkDeep">@nabilakss</span>
-                        <span class="text-amber-400 text-[10px]">⭐⭐⭐⭐⭐</span>
-                    </div>
-                    <p class="text-gray-600 text-[11px] line-clamp-2">"Spotify famplan murah bgt dibanding toko sebelah, bakalan langganan terus disini 🌸"</p>
+                <div>
+                    <h3 class="font-fredoka text-base font-bold text-pinkDeep flex items-center justify-center sm:justify-start gap-1">
+                        Proof & Testimoni Real ✨
+                    </h3>
+                    <p class="text-xs text-gray-600">Mau lihat ratusan bukti transaksi & testimoni asli Cherieping Store?</p>
                 </div>
             </div>
+            
+            <a id="testiBtn" href="#" target="_blank" class="w-full sm:w-auto bg-pinkDeep text-white px-5 py-2.5 rounded-2xl font-fredoka font-bold text-xs hover:bg-pinkAccent transition-all shadow-sm flex items-center justify-center gap-2 whitespace-nowrap">
+                <span>✨ Cek Testimoni Disini</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
         </div>
 
         <!-- Category Tabs -->
@@ -164,7 +149,7 @@
             </div>
 
             <!-- Form Isian Simpel -->
-            <form id="orderForm" onsubmit="handleCheckoutSubmit(event)" class="space-y-3 text-xs">
+            <form id="orderForm" onsubmit="event.preventDefault();" class="space-y-3 text-xs">
                 <div>
                     <label class="block font-bold text-pinkDeep mb-1">🎁 Pilih Varian / Durasi Paket</label>
                     <select id="custVariant" onchange="updateSummary()" required class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent font-medium text-pinkDeep">
@@ -178,14 +163,20 @@
                         <input type="text" id="custName" required placeholder="Contoh: Cantika" class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent">
                     </div>
                     <div>
-                        <label class="block font-bold text-pinkDeep mb-1">🔢 Jumlah (Qty)</label>
-                        <input type="number" id="custQty" min="1" value="1" onchange="updateSummary()" oninput="updateSummary()" required class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent">
+                        <label class="block font-bold text-pinkDeep mb-1">📱 Nomor HP / WA</label>
+                        <input type="tel" id="custPhone" required placeholder="Contoh: 081234567890" class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent">
                     </div>
                 </div>
 
-                <div>
-                    <label class="block font-bold text-pinkDeep mb-1">📝 Email / Catatan (Opsional)</label>
-                    <input type="text" id="custNote" placeholder="Tulis email jika butuh inv, atau catatan lain..." class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-pinkDeep mb-1">🔢 Jumlah (Qty)</label>
+                        <input type="number" id="custQty" min="1" value="1" onchange="updateSummary()" oninput="updateSummary()" required class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-pinkDeep mb-1">📝 Catatan (Opsional)</label>
+                        <input type="text" id="custNote" placeholder="Catatan tambahan..." class="w-full p-2.5 rounded-xl border-2 border-pinkBorder bg-pinkSoft/30 focus:outline-none focus:border-pinkAccent">
+                    </div>
                 </div>
 
                 <!-- Informasi Pembayaran Manual -->
@@ -211,10 +202,11 @@
     </div>
 
     <script>
-        // Config Link Kontak Admin (Ganti dengan link kontak kamu ya dear!)
+        // CONFIG KONTAK & LINK TESTIMONI KAMU YA DEAR!
         const CONFIG = {
-            waLink: "https://wa.me/6281234567890",   // Link WA (wa.me atau wa.link)
-            teleLink: "https://t.me/CheriepingAdmin"  // Link Telegram
+            waLink: "https://wa.me/6281234567890",        // Link WhatsApp
+            teleLink: "https://t.me/CheriepingAdmin",      // Link Telegram Admin
+            testiLink: "https://t.me/TestimoniCherieping"   // Link Channel/Bukti Testimoni Asli Kamu
         };
 
         // Database Pricelist Cherieping Store
@@ -532,6 +524,9 @@
         let currentCategory = 'ALL';
         let selectedProduct = null;
 
+        // Init Link Testimoni
+        document.getElementById('testiBtn').href = CONFIG.testiLink;
+
         // Render Katalog Produk
         function renderProducts() {
             const grid = document.getElementById('productGrid');
@@ -619,9 +614,17 @@
         // Send Direct Order Format via Link
         function sendToPlatform(platform) {
             const custName = document.getElementById('custName').value.trim();
+            const custPhone = document.getElementById('custPhone').value.trim();
+
             if (!custName) {
                 alert('Tulis nama atau panggilan kamu dulu ya dear~ 💖');
                 document.getElementById('custName').focus();
+                return;
+            }
+
+            if (!custPhone) {
+                alert('Tulis nomor HP / WhatsApp kamu dulu ya dear~ 📱');
+                document.getElementById('custPhone').focus();
                 return;
             }
 
@@ -636,10 +639,11 @@
                 `Aku mau order aplikasi nih dear~\n` +
                 `━━━━━━━━━━━━━━━━━━\n` +
                 `👤 *Nama:* ${custName}\n` +
+                `📱 *No. HP/WA:* ${custPhone}\n` +
                 `📦 *Aplikasi:* ${selectedProduct.name}\n` +
                 `🎁 *Paket:* ${variant.name}\n` +
                 `🔢 *Jumlah:* ${qty} Pcs\n` +
-                `📝 *Email/Catatan:* ${note}\n` +
+                `📝 *Catatan:* ${note}\n` +
                 `💰 *Total Tagihan:* Rp ${total.toLocaleString('id-ID')}\n` +
                 `━━━━━━━━━━━━━━━━━━\n\n` +
                 `Minta konfirmasi ketersediaan stok & QRIS pembayarannya ya admin! Terima kasih 💖`
